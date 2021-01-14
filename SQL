@@ -1,0 +1,50 @@
+CREATE DATABASE [Organization]
+
+use [Organization]
+
+go
+
+CREATE TABLE [MainInfo]
+(
+[ID]					INT PRIMARY KEY IDENTITY(1,1),
+[IDNameWork]			INT CONSTRAINT IDNameWork_MainInfo_Work_NameWork FOREIGN KEY REFERENCES [Work]([ID]),
+[IDFullName]			INT CONSTRAINT IDFullName_MainInfo_Employee_FullName FOREIGN KEY REFERENCES [Employee]([ID]),
+[IDReadiness]			INT CONSTRAINT IDReadiness_MainInfo_Work_Readiness FOREIGN KEY REFERENCES [WorkInfo]([ID]),
+)
+
+CREATE TABLE [Employee]
+(
+[ID]											INT PRIMARY KEY IDENTITY(1,1),
+[NumberEmployee]								INT NOT NULL,
+[FullName]										NVARCHAR(MAX),
+[Position]										NVARCHAR(MAX)
+)									          
+									          
+CREATE TABLE [Work]					          
+(									          
+[ID]											INT PRIMARY KEY IDENTITY(1,1),	          
+[NumberWork]									INT NOT NULL,
+[NameWork]										NVARCHAR(MAX) NOT NULL
+)									          
+									          
+CREATE TABLE [WorkInfo]				          
+(									          
+[ID]											INT PRIMARY KEY IDENTITY(1,1),	          
+[DateOfComplite]								DATE,
+[PlannedDateFoComplite]							DATE NOT NULL,
+[Laboriousness]									INT NOT NULL,
+[Readiness]										INT NOT NULL,
+) 
+
+INSERT [Employee]		([NumberEmployee],[FullName],[Position])								VALUES ('01','Антон','Ученый')
+INSERT [Work]			([NumberWork],[NameWork])												VALUES ('1','Построить телескоп')
+INSERT [WorkInfo]		([DateOfComplite],[PlannedDateFoComplite],[Laboriousness],[Readiness])	VALUES ('10-10-10','10-10-10','15','15')
+INSERT [MainInfo]		([IDNameWork],[IDFullName],[IDReadiness])								VALUES ('1','1','1')
+
+SELECT * FROM [Employee]
+
+SELECT * FROM [Work]
+
+SELECT * FROM [WorkInfo]
+
+SELECT * FROM [MainInfo]
