@@ -1,0 +1,161 @@
+﻿<Page x:Class="individ.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:individ.Pages"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      d:DesignHeight="600" d:DesignWidth="1200"
+      Title="MainPage">
+
+    <Grid>
+
+        <StackPanel>
+            <Image Source="/Fon/fonimage.jpg"></Image>
+        </StackPanel>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="520"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button  
+                Content="Подробнее" 
+                BorderBrush="Blue"             
+                x:Name="ButtonMoreInfo"                    
+                Click="ButtonMoreInfo_Click"
+                    FontSize="14">
+                </Button>
+
+                <Button 
+                BorderBrush="Black" 
+                Content="Добавить" 
+                x:Name="ButtonAdd" 
+                Click="ButtonAdd_Click"
+                FontSize="14">
+                </Button>
+
+
+                <Button 
+                x:Name="ButtonEdit" 
+                BorderBrush="Black"     
+                Content="Редактировать" Click="ButtonEdit_Click"
+                    FontSize="14">
+                </Button>
+
+
+                <Button 
+                BorderBrush="Red" 
+                x:Name="ButtonDelete" 
+                Content="Удалить" 
+                Click="ButtonDelete_Click"
+                    FontSize="14">
+                </Button>
+
+
+                <Button 
+                BorderBrush="Red" 
+                Content="Удалить все строки" 
+                Click="Button_Click"
+                    FontSize="11">
+                </Button>
+
+                <StackPanel VerticalAlignment="Center">
+
+
+                    <CheckBox
+                    Content="Завершенность меньше 50%"
+                    x:Name="chk1" Checked="chk1_Checked"
+                    Unchecked="chk1_Unchecked"
+                    Margin="5"
+                    FontSize="10">
+                    </CheckBox>
+
+                    <CheckBox
+                    Content="Плановые сроки завершения превышают даты завершения"
+                    x:Name="chk2" Checked="chk2_Checked"
+                    Unchecked="chk2_Unchecked"
+                    Margin="5"
+                    FontSize="10">
+                    </CheckBox>
+
+
+                </StackPanel>
+
+
+                <TextBlock 
+                Text="Поиск:" 
+                Width="70" 
+                FontSize="20" 
+                Margin="15 30 0 0">
+                </TextBlock>
+
+
+                <TextBox  
+                Width="200" 
+                Height="30"
+                Margin="0,15,0,5" 
+                Background="AliceBlue" 
+                BorderBrush="Black" 
+                FontSize="15" 
+                x:Name="textboxSearch"          TextChanged="textboxSearch_TextChanged">
+                </TextBox>
+
+
+
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" x:Name="DataGridTablica" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" EnableRowVirtualization="False"
+                      LoadingRow="DataGridTablica_LoadingRow">
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn
+                        Header="Название работы" 
+                        Binding="{Binding Work.NameWork}" 
+                        Width="*">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="ФИО Работника" 
+                        Binding="{Binding Employee.FullName}" 
+                        Width="*">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="Профессия" 
+                        Binding="{Binding Employee.Position}"
+                        Width="*">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="Дата завершения" 
+                        Binding="{Binding WorkInfo.DateOfComplite,StringFormat={}{0:dd MMMM yyyy}}"
+                        Width="*">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="Планируемая дата завершения" 
+                        Binding="{Binding WorkInfo.PlannedDateFoComplite,StringFormat={}{0:dd MMMM yyyy}}" 
+                        Width="*">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="Завершенность(%)" 
+                        Binding="{Binding WorkInfo.Readiness}" 
+                        Width="*">
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+
+    </Grid>
+</Page>

@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrganizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumberEmployee" Type="Int32" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MainInfo" Relationship="Self.IDFullName_MainInfo_Employee_FullName" FromRole="Employee" ToRole="MainInfo" />
+  </EntityType>
+  <EntityType Name="MainInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDNameWork" Type="Int32" />
+    <Property Name="IDFullName" Type="Int32" />
+    <Property Name="IDReadiness" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.IDFullName_MainInfo_Employee_FullName" FromRole="MainInfo" ToRole="Employee" />
+    <NavigationProperty Name="Work" Relationship="Self.IDNameWork_MainInfo_Work_NameWork" FromRole="MainInfo" ToRole="Work" />
+    <NavigationProperty Name="WorkInfo" Relationship="Self.IDReadiness_MainInfo_Work_Readiness" FromRole="MainInfo" ToRole="WorkInfo" />
+  </EntityType>
+  <EntityType Name="Work">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumberWork" Type="Int32" Nullable="false" />
+    <Property Name="NameWork" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MainInfo" Relationship="Self.IDNameWork_MainInfo_Work_NameWork" FromRole="Work" ToRole="MainInfo" />
+  </EntityType>
+  <EntityType Name="WorkInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateOfComplite" Type="DateTime" Precision="0" />
+    <Property Name="PlannedDateFoComplite" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Laboriousness" Type="Int32" Nullable="false" />
+    <Property Name="Readiness" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MainInfo" Relationship="Self.IDReadiness_MainInfo_Work_Readiness" FromRole="WorkInfo" ToRole="MainInfo" />
+  </EntityType>
+  <Association Name="IDFullName_MainInfo_Employee_FullName">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="MainInfo" Type="Self.MainInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MainInfo">
+        <PropertyRef Name="IDFullName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IDNameWork_MainInfo_Work_NameWork">
+    <End Role="Work" Type="Self.Work" Multiplicity="0..1" />
+    <End Role="MainInfo" Type="Self.MainInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Work">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MainInfo">
+        <PropertyRef Name="IDNameWork" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IDReadiness_MainInfo_Work_Readiness">
+    <End Role="WorkInfo" Type="Self.WorkInfo" Multiplicity="0..1" />
+    <End Role="MainInfo" Type="Self.MainInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MainInfo">
+        <PropertyRef Name="IDReadiness" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OrganizationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employee" EntityType="Self.Employee" />
+    <EntitySet Name="MainInfo" EntityType="Self.MainInfo" />
+    <EntitySet Name="Work" EntityType="Self.Work" />
+    <EntitySet Name="WorkInfo" EntityType="Self.WorkInfo" />
+    <AssociationSet Name="IDFullName_MainInfo_Employee_FullName" Association="Self.IDFullName_MainInfo_Employee_FullName">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="MainInfo" EntitySet="MainInfo" />
+    </AssociationSet>
+    <AssociationSet Name="IDNameWork_MainInfo_Work_NameWork" Association="Self.IDNameWork_MainInfo_Work_NameWork">
+      <End Role="Work" EntitySet="Work" />
+      <End Role="MainInfo" EntitySet="MainInfo" />
+    </AssociationSet>
+    <AssociationSet Name="IDReadiness_MainInfo_Work_Readiness" Association="Self.IDReadiness_MainInfo_Work_Readiness">
+      <End Role="WorkInfo" EntitySet="WorkInfo" />
+      <End Role="MainInfo" EntitySet="MainInfo" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OrganizationModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OrganizationModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
