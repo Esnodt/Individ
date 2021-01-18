@@ -1,0 +1,54 @@
+CREATE DATABASE [University]
+
+USE [University]
+
+CREATE TABLE [MainInfoTable]
+(
+[ID] INT IDENTITY (1,1) PRIMARY KEY,
+[Party] int NOT NULL,
+[idLesson]					INT	CONSTRAINT MainInfoTable_idLesson_Lesson_NumberDiscipline							FOREIGN KEY REFERENCES [Lesson]([ID]),
+[idClassroom]				INT	CONSTRAINT MainInfoTable_idClassroom_Classroom_NumberClass							FOREIGN KEY REFERENCES [Classroom]([ID]),
+[idTeacher]					INT	CONSTRAINT MainInfoTable_idTeacher_Teacher_NumberTeacher							FOREIGN KEY REFERENCES [Teacher]([ID]),
+[idHeadOfTheDepartament]	INT	CONSTRAINT MainInfoTable_idHeadOfTheDepartament_HeadOfTheDepartament_NumberManager  FOREIGN KEY REFERENCES [HeadOfTheDepartament]([ID])
+)
+
+
+CREATE TABLE [Lesson]
+(
+[ID] INT IDENTITY (1,1) PRIMARY KEY,
+[NumberDiscipline] int NOT NULL,
+[DisciplineName] NVARCHAR(MAX) NOT NULL,
+[NumberOfHours] int  NOT NULL,
+[ControlType] NVARCHAR(MAX) NOT NULL,
+[DisciplineSection] NVARCHAR(MAX) NOT NULL
+)
+
+CREATE TABLE [Classroom]
+(
+[ID] INT IDENTITY (1,1) PRIMARY KEY,
+[NumberClassrom] int NOT NULL,
+[Lecture] NVARCHAR(MAX) NOT NULL,
+[TheDateOfThe] DATE NOT NULL,
+[LectureStartTime] TIME NOT NULL,
+[LectureEndTime] TIME NOT NULL
+)
+
+CREATE TABLE [Teacher]
+(
+[ID] INT IDENTITY (1,1) PRIMARY KEY,
+[NumberTeacher] int NOT NULL,
+[FullName] NVARCHAR(MAX) NOT NULL,
+[TheAddress] NVARCHAR(MAX) NOT NULL,
+[Position] NVARCHAR(MAX) NOT NULL,
+[AcademicDegree] NVARCHAR(MAX)NOT NULL
+)
+
+CREATE TABLE [HeadOfTheDepartament]
+(
+[ID] INT IDENTITY (1,1) PRIMARY KEY,
+[NumberManager] int NOT NULL,
+[NameManager] NVARCHAR(MAX) NOT NULL,
+)
+
+INSERT [HeadOfTheDepartament] ([NumberManager],[NameManager]) VALUES ('001','Иванов.И.И')
+select * from [HeadOfTheDepartament]
